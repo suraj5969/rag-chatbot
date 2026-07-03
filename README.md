@@ -217,7 +217,7 @@ SYNTHESIS_STRATEGY="tree-summarization"
 
 ## Build the memory index
 
-We can download some Markdown pages from the [Blendle Employee Handbook](https://blendle.notion.site/Blendle-s-Employee-Handbook-7692ffe24f07450785f093b94bbe1a09) and put them under `docs`.
+We can download some Markdown pages from the [Transformers Repo](https://github.com/huggingface/transformers/tree/main/docs/source/en) or anything you like and put them under `docs`.
 
 Build the memory index by running:
 
