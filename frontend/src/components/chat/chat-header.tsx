@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Bot, Plus, History, Settings } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Bot, Plus, History, Settings } from "lucide-react";
 
 interface ChatHeaderProps {
-  onNewChat: () => void
-  disabled?: boolean
+  onNewChat: () => void;
+  disabled?: boolean;
 }
 
 export function ChatHeader({ onNewChat, disabled }: ChatHeaderProps) {
@@ -19,18 +19,14 @@ export function ChatHeader({ onNewChat, disabled }: ChatHeaderProps) {
             </div>
           </div>
           <div>
-            <h1 className="font-semibold text-foreground tracking-tight">Autara AI</h1>
+            <h1 className="font-semibold text-foreground tracking-tight">Mira AI</h1>
             <p className="text-xs text-muted-foreground">Powered by llamacpp and Chroma</p>
           </div>
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
+          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
             <History className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">History</span>
           </Button>
@@ -44,16 +40,12 @@ export function ChatHeader({ onNewChat, disabled }: ChatHeaderProps) {
             <Plus className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">New Chat</span>
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground"
-          >
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
             <Settings className="h-4 w-4" />
             <span className="sr-only">Settings</span>
           </Button>
         </div>
       </div>
     </header>
-  )
+  );
 }

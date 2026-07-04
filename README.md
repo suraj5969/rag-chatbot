@@ -238,14 +238,9 @@ make start
 
 The application will be available at http://localhost:5173, with the backend API at http://localhost:8000.
 
-![conversation-aware-chatbot.gif](images/conversation-aware-chatbot.gif)
-
 We can enable the RAG Mode feature in the UI to ask questions based on the context provided by the Markdown files you loaded and indexed in the previous step:
-
-![rag_chatbot_example.gif](images%2Frag_chatbot_example.gif)
 
 We can also upload a Markdown file using the file uploader.
 The document management section shows the uploaded and indexed documents.
 Once we upload one or multiple files, they will be: uploaded → chunked → embedded → upserted to Chroma.
 
-![rag_chatbot_load_doc_example.gif](images/rag_chatbot_load_doc_example.gif)
