@@ -57,8 +57,7 @@ def run_migrations_online() -> None:
     # Get database URL from environment variable
     if settings.DATABASE_URL is None:
         logger.info(
-            "DATABASE_URL environment variable is not set. "
-            "Applying migrations Using sqlalchemy.url from alembic.ini."
+            "DATABASE_URL environment variable is not set. Applying migrations Using sqlalchemy.url from alembic.ini."
         )
     else:
         logger.info("Applying migrations Using DATABASE_URL from environment variable.")
