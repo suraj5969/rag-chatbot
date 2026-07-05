@@ -1,15 +1,13 @@
 # RAG (Retrieval-augmented generation) ChatBot
 
-Check out the todo list to see the next steps and improvements we want to implement in this project [here](notes/todo.md).
-
 > [!IMPORTANT]
 > Disclaimer:
 > The code has been tested on:
->   * `Ubuntu 26.04 LTS` running on a Lenovo Legion 5 with twenty `13th Gen Intel® Core™ i7-13650HX` and
+>   * `Ubuntu 26.04 LTS` running on a Lenovo Legion 5 with `13th Gen Intel® Core™ i7-13650HX` and
       an `NVIDIA GeForce RTX 4060`.
 >
 > If you are using another Operating System or different hardware, and you can't load the models, please
-> take a look at the official llama.cpp's GitHub [issue](https://github.com/ggml-org/llama.cpp/issues).
+> take a look at the official llama.cpp's GitHub [issue](https://github.com/ggml-org/llama.cpp/issues) or just ask AI.
 
 ## Table of contents
 
@@ -80,7 +78,7 @@ This is achieved through:
 
 For the UI:
 * Node 22.12+
-* Yarn 1.22+
+* npm
 
 ## Bootstrap Environment
 
@@ -88,8 +86,6 @@ To easily install the dependencies and start the services we created a make file
 
 ### How to use the make file
 
-* Check: ```make check```
-    * Use it to check that `which pip3` and `which python3` points to the right path.
 * Setup:
     * Setup with NVIDIA CUDA acceleration: ```make setup```
         * Creates an environment and installs all dependencies with NVIDIA CUDA acceleration.
@@ -114,17 +110,15 @@ To easily install the dependencies and start the services we created a make file
 
 ### Environment
 
-Copy .𝐞𝐧𝐯.𝐞𝐱𝐚𝐦𝐩𝐥𝐞 → .𝐞𝐧𝐯 and fill it in.
+Copy `.env.example` → `.env` and fill it in.
 
-Copy /frontend/.𝐞𝐧𝐯.𝐞𝐱𝐚𝐦𝐩𝐥𝐞 → .𝐞𝐧𝐯 and fill it in.
+Copy `/frontend/.env.example` → `.env` and fill it in.
 
 To install the UI dependencies, run:
 
 ```shell
 cd frontend
-nvm use
-npm install -g yarn
-yarn
+npm install
 
 # Create .env file
 echo "VITE_API_URL=http://localhost:8000" > .env
@@ -136,8 +130,13 @@ echo "VITE_API_URL=http://localhost:8000" > .env
 It uses quantized models which are stored in [GGML/GGUF](https://medium.com/@phillipgimmi/what-is-gguf-and-ggml-e364834d241c) format.
 
 We can load whatever `GGUF` model we want from [HuggingFace](https://huggingface.co/).
+To do so download the model in `.gguf` format manually, add it to the `/models` folder and set the `MODEL_PATH` variable in the .env file:
+```
+MODEL_PATH="/models/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+```
+Or set the `MODEL` variable with the name of the model you want to load, and the `MODEL_URL` variable with the URL of the model in GGUF format:
+it will auto download the model in `models/` folder.
 
-In the .𝐞𝐧𝐯 we need to set the `MODEL` variable with the name of the model we want to load, and the `MODEL_URL` variable with the URL of the model in GGUF format:
 ```
 MODEL="Meta-Llama-3.1-8B-Instruct-Q4_K_M"
 MODEL_URL="https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF/resolve/main/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
@@ -160,32 +159,14 @@ The chosen model will be downloaded in the `/models` folder and loaded in the `l
 >   - [whichllm](https://github.com/Andyyyy64/whichllm) - Auto-detects your GPU/CPU/RAM and ranks the top models from `HuggingFace` that fit your system.
 > - `Memory bandwidth` mostly determines speed (tokens/sec). Check if the bandwidth gives an acceptable speed.
 > - If not, upgrade hardware or optimize the model.
->
-> For instance, it seems better to buy a second-hand or refurbished Mac Studio M2 Max with at least 64GB RAM,
-> since it has 400Gbps of memory bandwidth compared to the M4 Pro, which has just 273Gbps.
 
-We recommend to start with `Qwen 3.5 9B` or `Meta Llama 3.2 Instruct 3B` since they are small enough to run on a cheap GPU with 6GB of VRAM and try larger models like `gpt-oss 120B` if you have the right capacity.
-
-We also recommend few models to start in the table below.
-
-| 🤖 Model                    | Model Size         | Max Context Window | Notes and link to the model card                                                                                                                             |
-|-----------------------------|--------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Qwen 3.6 27B                | 27B                | 262k               | **Recommended model** [Card](https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF)                                                                            |
-| Qwen 3.6 35B A3B            | 35B (3B activated) | 262k               | [Card](https://huggingface.co/unsloth/Qwen3.6-27B-GGUF)                                                                                                      |
-| Qwen 3.5 0.8B               | 0.8B               | 256k               | Tiny and fast multimodal, great for edge device - [Card](https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF)                                                   |
-| Qwen 3.5 2B                 | 2B                 | 256k               | Multimodal for lightweight agents (small tool calls) - [Card](https://huggingface.co/unsloth/Qwen3.5-2B-GGUF)                                                |
-| Qwen 3.5 4B                 | 4B                 | 256k               | Doesn’t drift from tasks as bad as 2B [Card](https://huggingface.co/unsloth/Qwen3.5-4B-GGUF)                                                                 |
-| Qwen 3.5 9B                 | 9B                 | 256k               | **Recommended model** Can handle more complex tasks and competes with larger models like gpt-oss 120B [Card](https://huggingface.co/unsloth/Qwen3.5-9B-GGUF) |
-| Meta Llama 3.2 Instruct     | 1B                 | 128k               | Optimized to run locally on a mobile or edge device - [Card](https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF)                                    |
-| Meta Llama 3.2 Instruct     | 3B                 | 128k               | Optimized to run locally on a mobile or edge device - [Card](https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF)                                    |
-| Meta Llama 3.1 Instruct     | 8B                 | 128k               | **Old but still recommended** [Card](https://huggingface.co/bartowski/Meta-Llama-3.1-8B-Instruct-GGUF)                                                       |
-| DeepSeek R1 Distill Qwen 7B | 7B                 | 128k               | **Experimental** [Card](https://huggingface.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF)                                                                   |
+We recommend to start with `Qwen 3.5 9B` or `Meta Llama 3.1 Instruct 8B` since they are small enough to run on a cheap GPU with 6GB of VRAM and try larger models like `gpt-oss 120B` if you have the right capacity.
 
 ### Set the Embedding Model
 
 For the semantic search, we support all the embedding models from `Sentence Transformers` but we tested those on the table below.
 
-In the .𝐞𝐧𝐯 we need to set the `EMBEDDING_MODEL` variable with the name of the model we want to load:
+In the .env we need to set the `EMBEDDING_MODEL` variable with the name of the model we want to load:
 ```
 EMBEDDING_MODEL="all-MiniLM-L6-v2"
 ```
@@ -204,7 +185,7 @@ which are small (239M & 677M parameters) with SOTA performance for multilingual 
 
 ### Set the Response Synthesis strategy
 
-In the .𝐞𝐧𝐯 we need to set the `SYNTHESIS_STRATEGY` variable with the name of the strategy we want to use for the response synthesis:
+In the .env we need to set the `SYNTHESIS_STRATEGY` variable with the name of the strategy we want to use for the response synthesis:
 ```
 SYNTHESIS_STRATEGY="tree-summarization"
 ```
