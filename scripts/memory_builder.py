@@ -161,12 +161,12 @@ def get_args() -> argparse.Namespace:
         required=False,
         default=50,
     )
-    parser.add_argument(
-        "--full-rebuild",
-        action="store_true",
-        default=False,
-        help="Wipe the vector store and registry and rebuild from scratch.",
-    )
+    # parser.add_argument(
+    #     "--full-rebuild",
+    #     action="store_true",
+    #     default=False,
+    #     help="Wipe the vector store and registry and rebuild from scratch.",
+    # )
     parser.add_argument(
         "--model-name",
         type=str,
