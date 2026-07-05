@@ -18,9 +18,9 @@ class DirectoryLoader:
         self,
         path: Path,
         glob: str = "**/[!.]*",
-        recursive: bool = False,
-        show_progress: bool = False,
-        use_multithreading: bool = False,
+        recursive: bool = True,
+        show_progress: bool = True,
+        use_multithreading: bool = True,
         max_concurrency: int = 4,
         **partition_kwargs: Any,
     ):
@@ -54,7 +54,7 @@ class DirectoryLoader:
         docs: list[Document] = []
         items = list(self.path.rglob(self.glob) if self.recursive else self.path.glob(self.glob))
 
-        pbar = None
+        pbar: tqdm | None = None
         if self.show_progress:
             pbar = tqdm(total=len(items))
 
@@ -71,9 +71,9 @@ class DirectoryLoader:
         return docs
 
     # File extensions that can be read directly as plain text — no NLP pipeline needed.
-    _PLAIN_TEXT_SUFFIXES = {".md", ".txt", ".rst", ".csv"}
+    _PLAIN_TEXT_SUFFIXES = {".md", ".mdx", ".txt"}
 
-    def load_file(self, doc_path: Path, docs: list[Document], pbar: Any | None) -> None:
+    def load_file(self, doc_path: Path, docs: list[Document], pbar: tqdm | None) -> None:
         """
         Load document from the specified path.
 
