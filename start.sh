@@ -2,7 +2,7 @@
 
 # Start backend in background
 cd backend || exit
-uv run python migration.py
+uv run python migration.py || { echo "Database migration failed! Exiting."; exit 1; }
 uvicorn main:app &
 BACKEND_PID=$!
 
