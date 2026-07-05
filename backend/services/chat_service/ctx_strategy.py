@@ -84,7 +84,7 @@ class CreateAndRefineStrategy(BaseSynthesisStrategy):
 
         num_of_contents = len(retrieved_contents)
 
-        for idx, node in enumerate(retrieved_contents, start=1):
+        for idx, node in enumerate(retrieved_contents):
             logger.info(f"--- Generating an answer for the chunk {idx} ... ---")
             context = node.page_content
             logger.debug(f"--- Context: '{context}' ... ---")

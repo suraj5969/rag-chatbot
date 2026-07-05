@@ -2,12 +2,10 @@
 SQLModel-backed document registry for tracking ingested documents and their chunks.
 """
 
-import json
 import logging
 
-from sqlmodel import Session, select
-
 from models.document_record import DocumentRecord
+from sqlmodel import Session, select
 
 logger = logging.getLogger(__name__)
 
@@ -69,7 +67,7 @@ class DocumentRegistry:
                 size=size,
                 content_type=content_type,
                 version_hash=version_hash,
-                chunk_ids_json=json.dumps(chunk_ids or []),
+                chunk_ids=chunk_ids or [],
             )
             self._session.add(record)
         self._session.commit()

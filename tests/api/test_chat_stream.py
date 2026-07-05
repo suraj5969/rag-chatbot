@@ -1,4 +1,5 @@
 """Tests for the WebSocket chat streaming endpoint."""
+
 import pytest
 from pydantic import ValidationError
 from starlette.testclient import TestClient

@@ -2,7 +2,6 @@ import uuid
 from typing import Any, Iterable
 
 import chromadb
-import chromadb.config
 from chromadb.utils.batch_utils import create_batches
 from cleantext import clean
 from helpers.log import get_logger
@@ -45,9 +44,9 @@ class Chroma:
                 Defaults to DistanceMetric.COSINE.
         """
         if is_persistent:
-            client_settings = chromadb.config.Settings(is_persistent=is_persistent, persist_directory=persist_directory)
+            client_settings = chromadb.Settings(is_persistent=is_persistent, persist_directory=persist_directory)
         else:
-            client_settings = chromadb.config.Settings(is_persistent=is_persistent)
+            client_settings = chromadb.Settings(is_persistent=is_persistent)
 
         if client is not None:
             self.client = client
@@ -266,10 +265,10 @@ class Chroma:
         try:
             # Get all items from collection
             results = self.collection.get()
-            if results and "metadatas" in results:
+            if results and ("metadatas" in results):
                 sources = set()
                 for metadatas in results["metadatas"]:
-                    if metadatas and "source" in metadatas:
+                    if metadatas and ("source" in metadatas):
                         sources.add(metadatas["source"])
                 return sorted(sources)
         except Exception as e:
