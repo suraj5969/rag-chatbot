@@ -3,10 +3,6 @@ install_dependencies:
 	uv venv
 	uv sync
 
-install_pre_commit:
-	uv run pre-commit install
-	uv run pre-commit install --hook-type pre-commit
-
 migrate_db:
 	cd backend && uv run python migration.py
 
@@ -16,7 +12,7 @@ start_llama_server:
 stop_llama_server:
 	docker compose down
 
-setup: install_dependencies install_pre_commit migrate_db start_llama_server
+setup: install_dependencies migrate_db start_llama_server
 
 start:
 	sh start.sh
