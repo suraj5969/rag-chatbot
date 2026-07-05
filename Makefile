@@ -1,9 +1,3 @@
-.PHONY: check update test clean start migrate_db
-
-check:
-	which pip3
-	which python3
-
 install_dependencies:
 	echo "Installing..."
 	uv venv
