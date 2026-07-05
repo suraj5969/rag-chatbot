@@ -12,9 +12,7 @@ React + TypeScript + Vite
 ```shell
 # Install frontend dependencies
 cd frontend
-nvm use
-npm install -g yarn
-yarn
+npm install
 
 # Create .env file
 echo "VITE_API_URL=http://localhost:8000" > .env
@@ -31,7 +29,7 @@ cd backend && uvicorn main:app --reload
 
 Start the frontend (in a new terminal):
 ```
-cd frontend && yarn dev
+cd frontend && npm run dev
 ```
 
 The application will be available at http://localhost:5173, with the backend API at http://localhost:5433.
@@ -52,5 +50,5 @@ We also installed the following ESLint plugins for better code quality and perfo
 
 To run ESLint with the recommended configuration, use:
 ```shell
-yarn lint
+npm run lint
 ```
